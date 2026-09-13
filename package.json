@@ -1,0 +1,23 @@
+{
+  "name": "mobile-phone-store-ecommerce",
+  "version": "1.0.0",
+  "description": "Full-stack E-Commerce website for Mobile Phone Store university project",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "start:backend": "npm --prefix backend start",
+    "test:backend": "npm --prefix backend test",
+    "db:init": "npm --prefix backend run db:init",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "keywords": [
+    "ecommerce",
+    "mobile-phones",
+    "react",
+    "nodejs",
+    "express",
+    "postgresql"
+  ],
+  "author": "University Full-Stack Capstone Team",
+  "license": "ISC"
+}
