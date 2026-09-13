@@ -117,14 +117,26 @@ async function runTests() {
         });
         assert(checkout.status === 201 && checkout.data.data.order_number, '11. POST /api/orders/checkout places transactional order with coupon discount');
 
-        // 10. Admin Dashboard
+        // 10. Wishlist Operations
+        const addWishlist = await request(`/wishlist/${phones[0].id}`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${customerToken}` }
+        });
+        assert(addWishlist.status === 201, '12. POST /api/wishlist/:productId adds phone to customer wishlist');
+
+        const viewWishlist = await request('/wishlist', {
+            headers: { Authorization: `Bearer ${customerToken}` }
+        });
+        assert(viewWishlist.status === 200 && viewWishlist.data.data.items.length > 0, '13. GET /api/wishlist fetches saved phones list');
+
+        // 11. Admin Dashboard
         const adminDashboard = await request('/admin/dashboard', {
             headers: { Authorization: `Bearer ${adminToken}` }
         });
-        assert(adminDashboard.status === 200 && adminDashboard.data.data.totalProducts > 0, '12. GET /api/admin/dashboard returns operational store statistics');
+        assert(adminDashboard.status === 200 && adminDashboard.data.data.totalProducts > 0, '14. GET /api/admin/dashboard returns operational store statistics');
 
         console.log('\n=============================================');
-        console.log('🎉 ALL BACKEND API & INTEGRATION TESTS PASSED!');
+        console.log('🎉 ALL BACKEND API & INTEGRATION TESTS PASSED (14/14)!');
         console.log('=============================================\n');
     } catch (err) {
         console.error('Test execution failed:', err.message);

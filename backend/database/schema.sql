@@ -180,7 +180,17 @@ CREATE TABLE IF NOT EXISTS discounts (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 14. WISHLISTS TABLE
+CREATE TABLE IF NOT EXISTS wishlists (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, product_id)
+);
+
 -- INDEXES FOR PERFORMANCE
+CREATE INDEX IF NOT EXISTS idx_wishlists_user ON wishlists(user_id);
 CREATE INDEX IF NOT EXISTS idx_products_brand ON products(brand_id);
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
 CREATE INDEX IF NOT EXISTS idx_products_status ON products(status);
