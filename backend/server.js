@@ -51,11 +51,19 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`=================================================`);
     console.log(`🚀 Mobile Phone Store API Server running on port ${PORT}`);
     console.log(`📡 Health Check: http://localhost:${PORT}/api/health`);
     console.log(`=================================================`);
+});
+
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${PORT} is already in use by another process. Please close it and restart.`);
+    } else {
+        console.error(`❌ Server error:`, err);
+    }
 });
 
 module.exports = app;
