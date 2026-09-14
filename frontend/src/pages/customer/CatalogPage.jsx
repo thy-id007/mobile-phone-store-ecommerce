@@ -3,8 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import { Filter, X, Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import { productApi } from '../../services/api';
 import ProductCard from '../../components/common/ProductCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 const CatalogPage = () => {
+  const { t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -95,9 +97,9 @@ const CatalogPage = () => {
       {/* Header bar */}
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>Smartphones Catalog</h1>
+          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>{t('catalog', 'Smartphones Catalog')}</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
-            Showing {products.length} available models matching your criteria
+            {products.length} {t('results_found', 'smartphones found')}
           </p>
         </div>
 
@@ -109,7 +111,7 @@ const CatalogPage = () => {
             style={{ display: 'none' }}
           >
             <Filter size={16} />
-            <span>Filters ({activeFiltersCount})</span>
+            <span>{t('filters', 'Filters')} ({activeFiltersCount})</span>
           </button>
 
           {/* Sort Selector */}
@@ -121,10 +123,10 @@ const CatalogPage = () => {
               className="select-field"
               style={{ width: 'auto', padding: '8px 12px' }}
             >
-              <option value="newest">Newest Arrivals</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="rating">Top Customer Rated</option>
+              <option value="newest">{t('sort_newest', 'Newest Arrivals')}</option>
+              <option value="price_asc">{t('sort_price_asc', 'Price: Low to High')}</option>
+              <option value="price_desc">{t('sort_price_desc', 'Price: High to Low')}</option>
+              <option value="rating">{t('sort_rating', 'Top Customer Rated')}</option>
             </select>
           </div>
         </div>
@@ -149,26 +151,26 @@ const CatalogPage = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700', fontSize: '16px' }}>
               <Filter size={18} color="var(--accent-blue)" />
-              <span>Filters</span>
+              <span>{t('filters', 'Filters')}</span>
             </div>
             {activeFiltersCount > 0 && (
               <button
                 onClick={clearAllFilters}
                 style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}
               >
-                Reset all
+                {t('clear_filters', 'Reset all')}
               </button>
             )}
           </div>
 
           {/* Search inside catalog */}
           <div>
-            <label className="form-label">Search Keyword</label>
+            <label className="form-label">{t('search_placeholder', 'Search Keyword')}</label>
             <div style={{ position: 'relative' }}>
               <Search size={15} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="text"
-                placeholder="Search models..."
+                placeholder={t('search_placeholder', 'Search models...')}
                 value={currentSearch}
                 onChange={(e) => updateParam('search', e.target.value)}
                 className="input-field"
@@ -179,7 +181,7 @@ const CatalogPage = () => {
 
           {/* Brand Filter */}
           <div>
-            <label className="form-label">Manufacturer / Brand</label>
+            <label className="form-label">{t('brands', 'Manufacturer / Brand')}</label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 onClick={() => updateParam('brand', '')}
@@ -195,7 +197,7 @@ const CatalogPage = () => {
                   fontSize: '13px',
                 }}
               >
-                All Brands
+                {t('all_brands', 'All Brands')}
               </button>
               {brands.map((b) => (
                 <button
@@ -224,7 +226,7 @@ const CatalogPage = () => {
 
           {/* Category Filter */}
           <div>
-            <label className="form-label">Category</label>
+            <label className="form-label">{t('categories', 'Category')}</label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 onClick={() => updateParam('category', '')}
@@ -240,7 +242,7 @@ const CatalogPage = () => {
                   fontSize: '13px',
                 }}
               >
-                All Categories
+                {t('all_categories', 'All Categories')}
               </button>
               {categories.map((c) => (
                 <button
@@ -266,7 +268,7 @@ const CatalogPage = () => {
 
           {/* RAM Options */}
           <div>
-            <label className="form-label">RAM Memory</label>
+            <label className="form-label">{t('ram', 'RAM Memory')}</label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {['8GB', '12GB', '16GB'].map((ram) => (
                 <button
@@ -283,7 +285,7 @@ const CatalogPage = () => {
 
           {/* Storage Options */}
           <div>
-            <label className="form-label">Storage Capacity</label>
+            <label className="form-label">{t('storage', 'Storage Capacity')}</label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {['128GB', '256GB', '512GB', '1TB'].map((storage) => (
                 <button

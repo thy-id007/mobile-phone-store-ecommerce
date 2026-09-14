@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Cpu, Eye, SlidersHorizontal, Check, Star } from 'lucide-react';
 import { useCompare } from '../../context/CompareContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ProductCard = ({ product }) => {
   const { isComparing, toggleCompare } = useCompare();
+  const { t } = useLanguage();
   const comparing = isComparing(product.id);
 
   const discount = parseFloat(product.discount_percentage || 0);
@@ -70,46 +72,47 @@ const ProductCard = ({ product }) => {
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
+            objectFit: 'contain',
             transition: 'transform 0.4s ease',
           }}
-          onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05)')}
-          onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1.0)')}
         />
       </Link>
 
-      {/* Phone Name & Rating */}
-      <div style={{ marginBottom: '8px' }}>
-        <Link to={`/product/${product.slug}`} style={{ textDecoration: 'none' }}>
-          <h3
-            style={{
-              fontSize: '16px',
-              fontWeight: '700',
-              lineHeight: '1.3',
-              marginBottom: '6px',
-              color: '#fff',
-              display: '-webkit-box',
-              WebkitLineClamp: 1,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-            }}
-            title={product.name}
-          >
-            {product.name}
-          </h3>
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--text-muted)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2px', color: '#f59e0b' }}>
-            <Star size={13} fill="#f59e0b" />
-            <span style={{ fontWeight: '700' }}>{product.avg_rating || '5.0'}</span>
-          </div>
-          <span>•</span>
-          <span>{product.review_count || 0} reviews</span>
+      {/* Product Title */}
+      <Link to={`/product/${product.slug}`} style={{ textDecoration: 'none' }}>
+        <h3
+          style={{
+            fontSize: '16px',
+            fontWeight: '700',
+            color: '#ffffff',
+            lineHeight: '1.4',
+            marginBottom: '6px',
+            transition: 'color 0.2s ease',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-blue)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#ffffff')}
+        >
+          {product.name}
+        </h3>
+      </Link>
+
+      {/* Rating & Review Count */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', color: '#fbbf24' }}>
+          <Star size={14} fill="#fbbf24" stroke="none" />
+          <span style={{ fontSize: '12px', fontWeight: '700', color: '#fff' }}>
+            {product.avg_rating || '5.0'}
+          </span>
         </div>
+        <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+          ({product.review_count || 12})
+        </span>
       </div>
 
-      {/* Hardware Specs Pills */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '16px', flex: 1 }}>
+      {/* Quick Specs Snippet */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px' }}>
         {product.processor_spec && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
             <Cpu size={13} color="var(--accent-cyan)" />
@@ -144,15 +147,15 @@ const ProductCard = ({ product }) => {
             onClick={() => toggleCompare(product)}
             className={`btn ${comparing ? 'btn-primary' : 'btn-secondary'} btn-sm`}
             style={{ padding: '8px 10px' }}
-            title={comparing ? 'Remove from Comparison' : 'Add to Compare'}
+            title={comparing ? 'Remove from Comparison' : t('compare')}
           >
             {comparing ? <Check size={16} /> : <SlidersHorizontal size={16} />}
           </button>
 
           {/* View Details Link */}
-          <Link to={`/product/${product.slug}`} className="btn btn-secondary btn-sm" style={{ width: '100%' }}>
+          <Link to={`/product/${product.slug}`} className="btn btn-secondary btn-sm" style={{ width: '100%', gap: '6px' }}>
             <Eye size={15} />
-            <span>View Details</span>
+            <span>{t('view_details')}</span>
           </Link>
         </div>
       </div>

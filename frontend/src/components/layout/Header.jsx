@@ -10,15 +10,18 @@ import {
   LayoutDashboard,
   Menu,
   X,
+  Globe,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useCompare } from '../../context/CompareContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Header = () => {
   const { user, logout, isAdmin } = useAuth();
   const { totalItems, setIsDrawerOpen } = useCart();
   const { selectedPhones } = useCompare();
+  const { language, toggleLanguage, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -34,10 +37,10 @@ const Header = () => {
 
   return (
     <header className="glass-header">
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', gap: '24px' }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', gap: '20px' }}>
         
         {/* Brand Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
           <div style={{
             width: '40px',
             height: '40px',
@@ -61,24 +64,24 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav style={{ display: 'none', gap: '28px', alignItems: 'center' }} className="desktop-nav">
+        <nav style={{ display: 'none', gap: '24px', alignItems: 'center' }} className="desktop-nav">
           <Link to="/" style={{ fontWeight: '500', color: 'var(--text-secondary)' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>
-            Home
+            {t('home')}
           </Link>
           <Link to="/catalog" style={{ fontWeight: '500', color: 'var(--text-secondary)' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>
-            All Phones
+            {t('all_phones')}
           </Link>
           <Link to="/compare" style={{ fontWeight: '500', color: 'var(--text-secondary)' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>
-            Compare
+            {t('compare')}
           </Link>
         </nav>
 
         {/* Search Bar */}
-        <form onSubmit={handleSearch} style={{ flex: 1, maxWidth: '400px', position: 'relative' }} className="desktop-search">
+        <form onSubmit={handleSearch} style={{ flex: 1, maxWidth: '380px', position: 'relative' }} className="desktop-search">
           <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
-            placeholder="Search phones, brands, chipsets..."
+            placeholder={t('search_placeholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="input-field"
@@ -87,17 +90,37 @@ const Header = () => {
         </form>
 
         {/* Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           
+          {/* Language Switcher Button (EN / ខ្មែរ) */}
+          <button
+            onClick={toggleLanguage}
+            className="btn btn-outline btn-sm"
+            style={{
+              padding: '6px 12px',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '12px',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'rgba(255, 255, 255, 0.04)'
+            }}
+            title="Switch Language / ប្តូរភាសា"
+          >
+            <Globe size={14} color="var(--accent-cyan)" />
+            <span>{language === 'en' ? '🇰🇭 ខ្មែរ' : '🇬🇧 EN'}</span>
+          </button>
+
           {/* Compare Badge Icon */}
           <Link
             to="/compare"
             className="btn btn-outline"
             style={{ padding: '8px 12px', borderRadius: 'var(--radius-full)', position: 'relative' }}
-            title="Phone Comparison"
+            title={t('compare')}
           >
             <SlidersHorizontal size={18} />
-            <span style={{ fontSize: '13px', display: 'none' }} className="desktop-text">Compare</span>
+            <span style={{ fontSize: '13px', display: 'none' }} className="desktop-text">{t('compare')}</span>
             {selectedPhones.length > 0 && (
               <span style={{
                 position: 'absolute',
@@ -124,9 +147,10 @@ const Header = () => {
             onClick={() => setIsDrawerOpen(true)}
             className="btn btn-primary"
             style={{ padding: '8px 16px', borderRadius: 'var(--radius-full)', position: 'relative' }}
+            title={t('cart')}
           >
             <ShoppingCart size={18} />
-            <span style={{ fontSize: '13px', display: 'none' }} className="desktop-text">Cart</span>
+            <span style={{ fontSize: '13px', display: 'none' }} className="desktop-text">{t('cart')}</span>
             {totalItems > 0 && (
               <span style={{
                 position: 'absolute',
@@ -153,26 +177,26 @@ const Header = () => {
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {isAdmin && (
-                <Link to="/admin/dashboard" className="btn btn-secondary btn-sm" title="Admin Portal">
+                <Link to="/admin/dashboard" className="btn btn-secondary btn-sm" title={t('admin_panel')}>
                   <LayoutDashboard size={16} />
                   <span className="desktop-text">Admin</span>
                 </Link>
               )}
-              <Link to="/profile" className="btn btn-outline btn-sm" title="Profile & Orders">
+              <Link to="/profile" className="btn btn-outline btn-sm" title={t('my_profile')}>
                 <User size={16} />
                 <span className="desktop-text">{user.full_name?.split(' ')[0]}</span>
               </Link>
-              <button onClick={logout} className="btn btn-outline btn-sm" title="Logout" style={{ padding: '8px' }}>
+              <button onClick={logout} className="btn btn-outline btn-sm" title={t('logout')} style={{ padding: '8px' }}>
                 <LogOut size={16} />
               </button>
             </div>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Link to="/login" className="btn btn-outline btn-sm">
-                Login
+                {t('login')}
               </Link>
               <Link to="/register" className="btn btn-primary btn-sm">
-                Register
+                {t('register')}
               </Link>
             </div>
           )}
@@ -195,41 +219,33 @@ const Header = () => {
             <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
             <input
               type="text"
-              placeholder="Search phones..."
+              placeholder={t('search_placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="input-field"
               style={{ paddingLeft: '42px', height: '40px' }}
             />
           </form>
-          <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>Home</Link>
-          <Link to="/catalog" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>All Phones</Link>
-          <Link to="/compare" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>Compare Phones ({selectedPhones.length})</Link>
+          <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('home')}</Link>
+          <Link to="/catalog" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('all_phones')}</Link>
+          <Link to="/compare" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('compare')} ({selectedPhones.length})</Link>
+          <button onClick={toggleLanguage} className="btn btn-outline btn-sm" style={{ width: '100%', justifyContent: 'center', marginTop: '4px' }}>
+            <Globe size={16} />
+            <span>{language === 'en' ? '🇰🇭 ភាសាខ្មែរ (Khmer)' : '🇬🇧 English'}</span>
+          </button>
           {user && (
             <>
-              <Link to="/orders" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>Order History</Link>
-              <Link to="/profile" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>My Account</Link>
+              <Link to="/orders" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_orders')}</Link>
+              <Link to="/profile" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_profile')}</Link>
               {isAdmin && (
                 <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600', color: 'var(--accent-cyan)' }}>
-                  Admin Dashboard
+                  {t('admin_panel')}
                 </Link>
               )}
             </>
           )}
         </div>
       )}
-
-      {/* CSS helper for responsive desktop elements */}
-      <style>{`
-        @media (min-width: 860px) {
-          .desktop-nav { display: flex !important; }
-          .desktop-text { display: inline !important; }
-        }
-        @media (max-width: 859px) {
-          .desktop-search { display: none !important; }
-          .mobile-toggle { display: inline-flex !important; }
-        }
-      `}</style>
     </header>
   );
 };

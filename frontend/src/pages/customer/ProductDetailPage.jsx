@@ -18,8 +18,10 @@ import { productApi } from '../../services/api';
 import { useCart } from '../../context/CartContext';
 import { useCompare } from '../../context/CompareContext';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ProductDetailPage = () => {
+  const { t } = useLanguage();
   const { slug } = useParams();
   const { user } = useAuth();
   const { addToCart } = useCart();
@@ -208,7 +210,7 @@ const ProductDetailPage = () => {
           {product.variants && product.variants.length > 0 && (
             <div style={{ marginBottom: '24px' }}>
               <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>Finish / Color:</span>
+                <span>{t('color', 'Color')}:</span>
                 <span style={{ color: '#fff', fontWeight: '700' }}>{selectedVariant?.color_name}</span>
               </label>
               <div style={{ display: 'flex', gap: '10px' }}>
@@ -258,7 +260,7 @@ const ProductDetailPage = () => {
           {product.variants && product.variants.length > 0 && (
             <div style={{ marginBottom: '28px' }}>
               <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>Storage & RAM Tier:</span>
+                <span>{t('storage', 'Storage')} & {t('ram', 'RAM')}:</span>
                 <span style={{ color: '#fff', fontWeight: '700' }}>{selectedVariant?.storage} ({selectedVariant?.ram} RAM)</span>
               </label>
               <div style={{ display: 'flex', gap: '10px' }}>
@@ -318,7 +320,7 @@ const ProductDetailPage = () => {
               disabled={addingToCart}
             >
               <ShoppingCart size={20} />
-              <span>{addingToCart ? 'Adding to Cart...' : cartSuccess ? 'Added to Cart!' : 'Add to Shopping Cart'}</span>
+              <span>{addingToCart ? '...' : cartSuccess ? '✓ ' + t('add_to_cart', 'Added') : t('add_to_cart', 'Add to Cart')}</span>
             </button>
 
             {/* Compare Toggle */}
@@ -358,7 +360,7 @@ const ProductDetailPage = () => {
       {/* FULL TECHNICAL SPECIFICATIONS SHEET */}
       <section style={{ marginBottom: '70px' }}>
         <h2 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '24px' }}>
-          Detailed Technical Specifications
+          {t('specs', 'Detailed Technical Specifications')}
         </h2>
 
         <div style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', overflow: 'hidden' }}>
@@ -399,7 +401,7 @@ const ProductDetailPage = () => {
       <section>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: '800' }}>
-            Verified Customer Reviews ({product.reviews?.length || 0})
+            {t('reviews', 'Verified Customer Reviews')} ({product.reviews?.length || 0})
           </h2>
         </div>
 

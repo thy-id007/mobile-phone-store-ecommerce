@@ -3,9 +3,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ShieldCheck, Truck, CreditCard, Tag, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { orderApi } from '../../services/api';
 
 const CheckoutPage = () => {
+  const { t } = useLanguage();
   const { items, subtotal, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -141,7 +143,7 @@ const CheckoutPage = () => {
     <div className="container" style={{ padding: '40px 20px' }}>
       
       <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '32px' }}>
-        Checkout & Shipping Confirmation
+        {t('checkout', 'Checkout & Shipping Confirmation')}
       </h1>
 
       <form onSubmit={handlePlaceOrder} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'start' }}>
@@ -153,7 +155,7 @@ const CheckoutPage = () => {
           <div className="card">
             <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Truck size={20} color="var(--accent-blue)" />
-              <span>1. Delivery Address</span>
+              <span>1. {t('shipping_address', 'Delivery Address')}</span>
             </h2>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -229,13 +231,13 @@ const CheckoutPage = () => {
           <div className="card">
             <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <CreditCard size={20} color="var(--accent-blue)" />
-              <span>2. Payment Option</span>
+              <span>2. {t('payment_method', 'Payment Option')}</span>
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[
-                { id: 'COD', title: 'Cash on Delivery (COD)', desc: 'Pay with cash upon package receipt' },
-                { id: 'Bank Transfer', title: 'Direct Bank Wire Transfer', desc: 'Electronic bank transfer with instant verification' },
+                { id: 'COD', title: t('cash_on_delivery', 'Cash on Delivery (COD)'), desc: 'Pay with cash upon package receipt' },
+                { id: 'Bank Transfer', title: t('bank_transfer', 'Direct Bank Wire Transfer (QR Code)'), desc: 'Electronic bank transfer with instant verification' },
                 { id: 'Credit Card', title: 'Credit / Debit Card (Visa/Mastercard)', desc: 'Encrypted payment gateway' },
                 { id: 'E-Wallet', title: 'E-Wallet / Apple Pay / Google Pay', desc: 'One-touch mobile checkout' },
               ].map((m) => (
@@ -287,7 +289,7 @@ const CheckoutPage = () => {
         <div style={{ position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           <div className="card">
-            <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>Order Overview</h2>
+            <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>{t('total', 'Order Overview')}</h2>
 
             {/* Selected items snippet */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px', maxHeight: '240px', overflowY: 'auto' }}>
@@ -308,14 +310,14 @@ const CheckoutPage = () => {
               <div style={{ display: 'flex', gap: '8px' }}>
                 <input
                   type="text"
-                  placeholder="Coupon (e.g. WELCOME10)"
+                  placeholder={t('coupon_code', 'Coupon (e.g. WELCOME10)')}
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
                   className="input-field"
                   style={{ textTransform: 'uppercase', fontSize: '13px' }}
                 />
                 <button type="button" onClick={handleApplyCoupon} className="btn btn-secondary btn-sm">
-                  Apply
+                  {t('apply_coupon', 'Apply')}
                 </button>
               </div>
               {appliedCoupon && (
@@ -328,24 +330,24 @@ const CheckoutPage = () => {
             {/* Calculations Breakdown */}
             <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Subtotal</span>
+                <span style={{ color: 'var(--text-muted)' }}>{t('subtotal', 'Subtotal')}</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
 
               {discountAmount > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--success)' }}>
-                  <span>Promotional Discount</span>
+                  <span>{t('coupon_code', 'Promotional Discount')}</span>
                   <span>-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
 
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Express Insured Shipping</span>
-                <span>{shippingFee === 0 ? <span className="badge badge-green">FREE</span> : `$${shippingFee.toFixed(2)}`}</span>
+                <span style={{ color: 'var(--text-muted)' }}>{t('shipping', 'Express Insured Shipping')}</span>
+                <span>{shippingFee === 0 ? <span className="badge badge-green">{t('free', 'FREE')}</span> : `$${shippingFee.toFixed(2)}`}</span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontWeight: '800', borderTop: '1px solid var(--border-subtle)', paddingTop: '12px', marginTop: '4px' }}>
-                <span>Total Due</span>
+                <span>{t('total', 'Total Due')}</span>
                 <span style={{ color: '#fff' }}>${totalAmount.toFixed(2)}</span>
               </div>
             </div>
@@ -356,7 +358,7 @@ const CheckoutPage = () => {
               className="btn btn-primary btn-lg"
               style={{ width: '100%', marginTop: '24px', gap: '10px' }}
             >
-              <span>{submitting ? 'Placing Order...' : 'Confirm & Place Order'}</span>
+              <span>{submitting ? '...' : t('place_order', 'Confirm & Place Order')}</span>
               <ArrowRight size={18} />
             </button>
 

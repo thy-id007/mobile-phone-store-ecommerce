@@ -4,8 +4,10 @@ import { SlidersHorizontal, Plus, X, ShoppingCart, Trash2, Cpu, Smartphone, Came
 import { productApi } from '../../services/api';
 import { useCompare } from '../../context/CompareContext';
 import { useCart } from '../../context/CartContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ComparePage = () => {
+  const { t } = useLanguage();
   const { selectedPhones, removeFromCompare, clearCompare, toggleCompare } = useCompare();
   const { addToCart } = useCart();
   const [comparisonData, setComparisonData] = useState([]);
@@ -58,15 +60,15 @@ const ComparePage = () => {
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-cyan)', fontSize: '13px', fontWeight: '700', marginBottom: '4px' }}>
             <SlidersHorizontal size={16} />
-            <span>HARDWARE MATRIX</span>
+            <span>{t('compare', 'HARDWARE MATRIX')}</span>
           </div>
-          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>Side-by-Side Mobile Phone Comparison</h1>
+          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>{t('comparison_title', 'Side-by-Side Mobile Phone Comparison')}</h1>
         </div>
 
         {selectedPhones.length > 0 && (
           <button onClick={clearCompare} className="btn btn-outline btn-sm">
             <Trash2 size={14} />
-            <span>Clear Matrix</span>
+            <span>{t('clear_filters', 'Clear Matrix')}</span>
           </button>
         )}
       </div>
@@ -74,12 +76,12 @@ const ComparePage = () => {
       {selectedPhones.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '80px 20px', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)' }}>
           <SlidersHorizontal size={48} color="var(--text-muted)" style={{ marginBottom: '16px' }} />
-          <h2 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '8px' }}>No phones selected for comparison</h2>
+          <h2 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '8px' }}>{t('compare_up_to', 'No phones selected for comparison')}</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '24px' }}>
-            Browse our flagship collection and select between 2 and 4 smartphones to compare hardware specifications side-by-side.
+            {t('compare_up_to', 'Browse our flagship collection and select between 2 and 4 smartphones to compare hardware specifications side-by-side.')}
           </p>
           <Link to="/catalog" className="btn btn-primary">
-            Explore All Smartphones
+            {t('browse_smartphones', 'Explore All Smartphones')}
           </Link>
         </div>
       ) : selectedPhones.length === 1 ? (

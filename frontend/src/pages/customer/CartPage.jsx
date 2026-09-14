@@ -2,8 +2,10 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Plus, Minus, Trash2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const CartPage = () => {
+  const { t } = useLanguage();
   const { items, subtotal, totalItems, updateQuantity, removeItem, clearCart } = useCart();
   const navigate = useNavigate();
 
@@ -11,12 +13,12 @@ const CartPage = () => {
     return (
       <div className="container" style={{ padding: '100px 20px', textAlign: 'center' }}>
         <ShoppingBag size={56} color="var(--text-muted)" style={{ marginBottom: '20px', opacity: 0.4 }} />
-        <h1 style={{ fontSize: '26px', fontWeight: '800', marginBottom: '10px' }}>Your Shopping Cart is Empty</h1>
+        <h1 style={{ fontSize: '26px', fontWeight: '800', marginBottom: '10px' }}>{t('cart_empty', 'Your Shopping Cart is Empty')}</h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '15px', marginBottom: '28px' }}>
-          Explore our latest flagship collection with titanium builds and optical zoom.
+          {t('cart_empty_desc', 'Explore our latest flagship collection with titanium builds and optical zoom.')}
         </p>
         <Link to="/catalog" className="btn btn-primary btn-lg">
-          Browse All Smartphones
+          {t('browse_smartphones', 'Browse All Smartphones')}
         </Link>
       </div>
     );
@@ -30,12 +32,12 @@ const CartPage = () => {
       
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
-          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>Shopping Cart ({totalItems} items)</h1>
+          <h1 style={{ fontSize: '28px', fontWeight: '800' }}>{t('shopping_cart', 'Shopping Cart')} ({totalItems})</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Review your chosen phone configurations before checkout</p>
         </div>
         <button onClick={clearCart} className="btn btn-outline btn-sm" style={{ gap: '6px' }}>
           <Trash2 size={14} />
-          <span>Clear Cart</span>
+          <span>{t('clear_cart', 'Clear Cart')}</span>
         </button>
       </div>
 
@@ -68,7 +70,7 @@ const CartPage = () => {
                   </h3>
                 </Link>
                 <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                  Color: {item.color_name} • Storage: {item.storage} • RAM: {item.ram}
+                  {t('color', 'Color')}: {item.color_name} • {t('storage', 'Storage')}: {item.storage} • {t('ram', 'RAM')}: {item.ram}
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -113,19 +115,19 @@ const CartPage = () => {
 
         {/* Order Summary Card */}
         <div className="card" style={{ position: 'sticky', top: '100px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>Order Total</h2>
+          <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>{t('total', 'Order Total')}</h2>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
-              <span>Items Subtotal</span>
+              <span>{t('subtotal', 'Items Subtotal')}</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
-              <span>Estimated Delivery</span>
-              <span>{shippingFee === 0 ? <span className="badge badge-green">FREE</span> : `$${shippingFee.toFixed(2)}`}</span>
+              <span>{t('shipping', 'Estimated Delivery')}</span>
+              <span>{shippingFee === 0 ? <span className="badge badge-green">{t('free', 'FREE')}</span> : `$${shippingFee.toFixed(2)}`}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '20px', fontWeight: '800', color: '#fff', borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
-              <span>Total Cost</span>
+              <span>{t('total', 'Total Cost')}</span>
               <span>${totalAmount.toFixed(2)}</span>
             </div>
           </div>
@@ -135,7 +137,7 @@ const CartPage = () => {
             className="btn btn-primary btn-lg"
             style={{ width: '100%', gap: '10px' }}
           >
-            <span>Proceed to Checkout</span>
+            <span>{t('checkout', 'Proceed to Checkout')}</span>
             <ArrowRight size={18} />
           </button>
 
