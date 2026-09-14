@@ -6,6 +6,8 @@
     "dev:backend": "npm --prefix backend run dev",
     "start:backend": "npm --prefix backend start",
     "test:backend": "npm --prefix backend test",
+    "test": "node backend/test/api_test.js",
+    "test:api": "node backend/test/api_test.js",
     "db:init": "npm --prefix backend run db:init",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build"
