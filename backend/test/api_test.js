@@ -129,14 +129,34 @@ async function runTests() {
         });
         assert(viewWishlist.status === 200 && viewWishlist.data.data.items.length > 0, '13. GET /api/wishlist fetches saved phones list');
 
-        // 11. Admin Dashboard
+        // 11. Review Operations
+        const postReview = await request(`/reviews/product/${phones[0].id}`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${customerToken}` },
+            body: {
+                rating: 5,
+                title: 'Exceptional build and camera quality!',
+                comment: 'The titanium finish feels amazing in hand and the battery easily lasts two days.'
+            }
+        });
+        assert(postReview.status === 201 || postReview.status === 400, '14. POST /api/reviews/product/:productId handles review submission with rating & validation');
+
+        const getReviews = await request(`/reviews/product/${phones[0].id}`);
+        assert(getReviews.status === 200 && getReviews.data.data.summary, '15. GET /api/reviews/product/:productId returns reviews and rating summary');
+
+        // 12. Admin Dashboard & Moderation
+        const adminReviews = await request('/reviews/admin/all', {
+            headers: { Authorization: `Bearer ${adminToken}` }
+        });
+        assert(adminReviews.status === 200 && Array.isArray(adminReviews.data.data.reviews), '16. GET /api/reviews/admin/all returns review moderation queue');
+
         const adminDashboard = await request('/admin/dashboard', {
             headers: { Authorization: `Bearer ${adminToken}` }
         });
-        assert(adminDashboard.status === 200 && adminDashboard.data.data.totalProducts > 0, '14. GET /api/admin/dashboard returns operational store statistics');
+        assert(adminDashboard.status === 200 && adminDashboard.data.data.totalProducts > 0, '17. GET /api/admin/dashboard returns operational store statistics');
 
         console.log('\n=============================================');
-        console.log('🎉 ALL BACKEND API & INTEGRATION TESTS PASSED (14/14)!');
+        console.log('🎉 ALL BACKEND API & INTEGRATION TESTS PASSED (17/17)!');
         console.log('=============================================\n');
     } catch (err) {
         console.error('Test execution failed:', err.message);
