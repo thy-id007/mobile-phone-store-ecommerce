@@ -19,13 +19,18 @@ if (connectionString) {
         ssl: isRemote ? { rejectUnauthorized: false } : false
     };
 } else {
+    const isRemoteHost = (process.env.PGHOST || '').includes('supabase.co') ||
+                         (process.env.PGHOST || '').includes('neon.tech') ||
+                         (process.env.PGHOST || '').includes('render.com') ||
+                         process.env.PGSSL === 'true';
+
     poolConfig = {
         host: process.env.PGHOST || 'localhost',
         port: parseInt(process.env.PGPORT || '5432', 10),
         user: process.env.PGUSER || 'postgres',
         password: process.env.PGPASSWORD || 'postgres',
         database: process.env.PGDATABASE || 'mobilestore_db',
-        ssl: false
+        ssl: isRemoteHost ? { rejectUnauthorized: false } : false
     };
 }
 
