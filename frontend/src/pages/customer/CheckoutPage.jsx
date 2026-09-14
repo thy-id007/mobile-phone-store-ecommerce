@@ -17,10 +17,10 @@ const CheckoutPage = () => {
     recipient_name: user?.full_name || '',
     phone: user?.phone || '',
     street_address: '',
-    city: 'Springfield',
-    state_province: 'OR',
-    postal_code: '97477',
-    country: 'United States',
+    city: 'Phnom Penh',
+    state_province: 'Phnom Penh',
+    postal_code: '12000',
+    country: 'Cambodia',
   });
 
   const [paymentMethod, setPaymentMethod] = useState('COD');
@@ -218,56 +218,59 @@ const CheckoutPage = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Phone Contact *</label>
+                <label className="form-label">Phone Contact (KH) *</label>
                 <input
                   type="tel"
                   required
                   value={shippingAddress.phone}
                   onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
                   className="input-field"
-                  placeholder="+1 (555) 019-2834"
+                  placeholder="012 888 992 or +855 12 888 992"
                 />
               </div>
             </div>
 
             <div className="form-group">
-              <label className="form-label">Street Address *</label>
+              <label className="form-label">Street Address / House No. *</label>
               <input
                 type="text"
                 required
                 value={shippingAddress.street_address}
                 onChange={(e) => setShippingAddress({ ...shippingAddress, street_address: e.target.value })}
                 className="input-field"
-                placeholder="Apartment, suite, unit, street number"
+                placeholder="e.g. St 271, Sangkat Toul Tompoung / Monivong Blvd"
               />
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
               <div className="form-group">
-                <label className="form-label">City</label>
+                <label className="form-label">City / Province</label>
                 <input
                   type="text"
                   value={shippingAddress.city}
                   onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
                   className="input-field"
+                  placeholder="Phnom Penh"
                 />
               </div>
               <div className="form-group">
-                <label className="form-label">State / Province</label>
+                <label className="form-label">Khan / District</label>
                 <input
                   type="text"
                   value={shippingAddress.state_province}
                   onChange={(e) => setShippingAddress({ ...shippingAddress, state_province: e.target.value })}
                   className="input-field"
+                  placeholder="Khan Chamkarmon"
                 />
               </div>
               <div className="form-group">
-                <label className="form-label">Postal Code</label>
+                <label className="form-label">Country</label>
                 <input
                   type="text"
-                  value={shippingAddress.postal_code}
-                  onChange={(e) => setShippingAddress({ ...shippingAddress, postal_code: e.target.value })}
+                  value={shippingAddress.country}
+                  onChange={(e) => setShippingAddress({ ...shippingAddress, country: e.target.value })}
                   className="input-field"
+                  placeholder="Cambodia"
                 />
               </div>
             </div>
@@ -465,6 +468,15 @@ const CheckoutPage = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontWeight: '800', borderTop: '1px solid var(--border-subtle)', paddingTop: '12px', marginTop: '4px' }}>
                 <span>{t('total', 'Total Due')}</span>
                 <span style={{ color: '#fff' }}>${totalAmount.toFixed(2)}</span>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px', fontSize: '13px', color: 'var(--accent-cyan)' }}>
+                <span>KHR Equivalent:</span>
+                <span style={{ fontWeight: '700' }}>≈ ៛{(Math.round(totalAmount * 4100 / 1000) * 1000).toLocaleString()} KHR</span>
+              </div>
+
+              <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(59, 130, 246, 0.08)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(59, 130, 246, 0.2)', fontSize: '11px', color: 'var(--text-secondary)' }}>
+                🇰🇭 <strong>Phnom Penh Express:</strong> 1-2H delivery via Grab/Nham24 or pick up at Toul Kork / BKK1 branches.
               </div>
             </div>
 

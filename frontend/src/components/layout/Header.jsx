@@ -37,6 +37,25 @@ const Header = () => {
 
   return (
     <header className="glass-header">
+      {/* Phnom Penh Local Shop Announcement Top Bar */}
+      <div style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.18) 0%, rgba(6,182,212,0.18) 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '5px 0', fontSize: '11.5px', color: 'var(--text-secondary)' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>🇰🇭</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Phnom Penh Local Flagship Store</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
+            <span>Preah Monivong & Toul Kork Branches</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span>⚡ 1-2H Fast Delivery</span>
+            <span>•</span>
+            <span>🛡️ Official Cambodia Warranty</span>
+            <span>•</span>
+            <span style={{ color: 'var(--accent-cyan)', fontWeight: '600' }}>KHQR Instant Pay</span>
+          </div>
+        </div>
+      </div>
+
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', gap: '20px' }}>
         
         {/* Brand Logo */}

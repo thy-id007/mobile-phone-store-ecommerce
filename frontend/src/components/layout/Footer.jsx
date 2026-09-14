@@ -104,6 +104,17 @@ const Footer = () => {
           </ul>
         </div>
 
+        <div>
+          <h4 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '18px', color: '#fff' }}>🇰🇭 Phnom Penh Stores</h4>
+          <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+            <li>📍 <strong>BKK1 Branch:</strong> Preah Monivong Blvd, BKK1, Phnom Penh</li>
+            <li>📍 <strong>Toul Kork Branch:</strong> St 271, Phsar Depo, Phnom Penh</li>
+            <li>📞 <strong>Hotline:</strong> 012 888 992 / +855 23 888 999</li>
+            <li>🛵 <strong>Delivery:</strong> 1-2H Grab/Nham24 in Phnom Penh</li>
+            <li>💳 <strong>Payments:</strong> KHQR (ABA, Wing, ACLEDA) & COD</li>
+          </ul>
+        </div>
+
       </div>
 
       {/* Bottom Bar */}

@@ -134,7 +134,7 @@ const ProductCard = ({ product }) => {
 
       {/* Pricing & CTA Controls */}
       <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: 'auto' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '20px', fontWeight: '800', color: '#fff' }}>
             ${discountedPrice}
           </span>
@@ -143,6 +143,9 @@ const ProductCard = ({ product }) => {
               ${basePrice.toFixed(2)}
             </span>
           )}
+          <span style={{ fontSize: '11px', color: 'var(--accent-cyan)', fontWeight: '600', marginLeft: 'auto' }}>
+            ≈ ៛{(Math.round(parseFloat(discountedPrice) * 4100 / 1000) * 1000).toLocaleString()}
+          </span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px' }}>

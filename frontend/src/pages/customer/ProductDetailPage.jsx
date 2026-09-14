@@ -214,7 +214,15 @@ const ProductDetailPage = () => {
               )}
             </div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '6px' }}>
-              Includes all local taxes and official 2-year warranty
+              Includes local Cambodia import duties & official manufacturer warranty
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px', paddingTop: '12px', borderTop: '1px dashed var(--border-subtle)' }}>
+              <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+                🇰🇭 Cambodia Local Retail Price
+              </span>
+              <span style={{ fontSize: '15px', color: 'var(--accent-cyan)', fontWeight: '800' }}>
+                ≈ ៛{(Math.round(parseFloat(effectivePrice) * 4100 / 1000) * 1000).toLocaleString()} KHR
+              </span>
             </div>
           </div>
 
@@ -363,6 +371,20 @@ const ProductDetailPage = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
               <Smartphone size={16} color="var(--warning)" />
               <span>{product.os_spec || 'Latest Operating System'}</span>
+            </div>
+          </div>
+
+          {/* Phnom Penh Local Shop Delivery & Official Cambodia Warranty Assurance */}
+          <div style={{ marginTop: '16px', padding: '14px 16px', background: 'rgba(59, 130, 246, 0.08)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(59, 130, 246, 0.2)', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#fff', fontWeight: '700' }}>
+              <span>🇰🇭</span>
+              <span>Phnom Penh In-Stock • Local Shop Guarantee</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
+              <span>⚡ 1-2H Fast Delivery via Grab / Nham24 in Phnom Penh</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
+              <span>🛡️ 1-Year Official Cambodia Warranty with local service center</span>
             </div>
           </div>
 
