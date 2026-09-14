@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ShieldCheck, Truck, CreditCard, Tag, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Truck, CreditCard, Tag, ArrowRight, CheckCircle2, QrCode } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { orderApi } from '../../services/api';
+import PaymentQrModal from '../../components/common/PaymentQrModal';
 
 const CheckoutPage = () => {
   const { t } = useLanguage();
@@ -23,11 +24,19 @@ const CheckoutPage = () => {
   });
 
   const [paymentMethod, setPaymentMethod] = useState('COD');
+  const [showQrModal, setShowQrModal] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [orderComplete, setOrderComplete] = useState(null);
+
+  const handleSelectPaymentMethod = (methodId) => {
+    setPaymentMethod(methodId);
+    if (methodId === 'Bank Transfer') {
+      setShowQrModal(true);
+    }
+  };
 
   if (items.length === 0 && !orderComplete) {
     return (
@@ -126,6 +135,36 @@ const CheckoutPage = () => {
             </div>
           </div>
 
+          {paymentMethod === 'Bank Transfer' && (
+            <div
+              style={{
+                background: 'rgba(225, 29, 72, 0.08)',
+                border: '1px solid rgba(225, 29, 72, 0.35)',
+                borderRadius: '14px',
+                padding: '18px',
+                marginBottom: '28px',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ fontWeight: '800', color: '#f43f5e', fontSize: '15px', marginBottom: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <QrCode size={20} />
+                <span>Bank Transfer (KHQR) Payment Required</span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary, #94a3b8)', marginBottom: '14px' }}>
+                Please scan the QR code to complete transfer of <strong>${parseFloat(orderComplete.total_amount).toFixed(2)} USD</strong> to ABA Bank (001 889 992).
+              </p>
+              <button
+                type="button"
+                onClick={() => setShowQrModal(true)}
+                className="btn btn-primary btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', margin: '0 auto', padding: '8px 18px' }}
+              >
+                <QrCode size={16} />
+                <span>View / Scan QR Code Again</span>
+              </button>
+            </div>
+          )}
+
           <div style={{ display: 'flex', gap: '14px', justifyContent: 'center' }}>
             <Link to={`/orders`} className="btn btn-primary">
               View Order History
@@ -135,6 +174,13 @@ const CheckoutPage = () => {
             </Link>
           </div>
         </div>
+
+        <PaymentQrModal
+          isOpen={showQrModal}
+          onClose={() => setShowQrModal(false)}
+          totalAmount={parseFloat(orderComplete.total_amount)}
+          orderNumber={orderComplete.order_number || ''}
+        />
       </div>
     );
   }
@@ -241,32 +287,102 @@ const CheckoutPage = () => {
                 { id: 'Credit Card', title: 'Credit / Debit Card (Visa/Mastercard)', desc: 'Encrypted payment gateway' },
                 { id: 'E-Wallet', title: 'E-Wallet / Apple Pay / Google Pay', desc: 'One-touch mobile checkout' },
               ].map((m) => (
-                <label
+                <div
                   key={m.id}
+                  id={`payment-method-${m.id.toLowerCase().replace(/\s+/g, '-')}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => handleSelectPaymentMethod(m.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleSelectPaymentMethod(m.id);
+                    }
+                  }}
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     gap: '14px',
                     padding: '14px 18px',
                     borderRadius: 'var(--radius-md)',
                     background: paymentMethod === m.id ? 'rgba(59, 130, 246, 0.12)' : 'var(--bg-input)',
                     border: paymentMethod === m.id ? '2px solid var(--accent-blue)' : '1px solid var(--border-card)',
                     cursor: 'pointer',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   }}
                 >
                   <input
                     type="radio"
+                    id={`radio-${m.id.toLowerCase().replace(/\s+/g, '-')}`}
                     name="payment_method"
                     value={m.id}
                     checked={paymentMethod === m.id}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    style={{ accentColor: 'var(--accent-blue)' }}
+                    onChange={() => handleSelectPaymentMethod(m.id)}
+                    style={{ accentColor: 'var(--accent-blue)', marginTop: '4px', cursor: 'pointer' }}
                   />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '14px', color: '#fff' }}>{m.title}</div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{m.desc}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: '700', fontSize: '14px', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span>{m.title}</span>
+                      {m.id === 'Bank Transfer' && (
+                        <span
+                          style={{
+                            background: 'linear-gradient(135deg, #e11d48, #be123c)',
+                            color: '#fff',
+                            fontSize: '10px',
+                            fontWeight: '900',
+                            padding: '2px 7px',
+                            borderRadius: '4px',
+                            letterSpacing: '0.5px',
+                            boxShadow: '0 2px 5px rgba(225, 29, 72, 0.4)',
+                          }}
+                        >
+                          KHQR
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>{m.desc}</div>
+
+                    {m.id === 'Bank Transfer' && paymentMethod === 'Bank Transfer' && (
+                      <div
+                        style={{
+                          marginTop: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          flexWrap: 'wrap',
+                          background: 'rgba(59, 130, 246, 0.08)',
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          border: '1px solid rgba(59, 130, 246, 0.2)',
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setShowQrModal(true);
+                          }}
+                          className="btn btn-sm btn-primary"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '6px 14px',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                          }}
+                        >
+                          <QrCode size={15} />
+                          <span>{t('qr_view_button', 'Scan QR Code Now')}</span>
+                        </button>
+                        <span style={{ fontSize: '12px', color: 'var(--accent-cyan)' }}>
+                          ABA Bank • Bakong KHQR
+                        </span>
+                      </div>
+                    )}
                   </div>
-                </label>
+                </div>
               ))}
             </div>
           </div>
@@ -371,6 +487,14 @@ const CheckoutPage = () => {
         </div>
 
       </form>
+
+      {/* Bank Transfer / KHQR Payment Modal */}
+      <PaymentQrModal
+        isOpen={showQrModal}
+        onClose={() => setShowQrModal(false)}
+        totalAmount={totalAmount}
+        orderNumber={orderComplete?.order_number || ''}
+      />
 
     </div>
   );

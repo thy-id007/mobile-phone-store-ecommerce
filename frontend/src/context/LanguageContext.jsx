@@ -99,6 +99,16 @@ export const translations = {
     payment_method: 'Payment Method',
     cash_on_delivery: 'Cash on Delivery (COD)',
     bank_transfer: 'Bank Transfer (QR Code)',
+    qr_payment_title: 'Bank Transfer (QR Code Payment)',
+    qr_scan_instruction: 'Scan QR code with your mobile banking app (ABA, Wing, ACLEDA, Bakong, etc.) to complete payment.',
+    qr_merchant_name: 'Merchant Name',
+    qr_account_number: 'Account Number',
+    qr_amount_due: 'Total Amount Due',
+    qr_copied: 'Copied!',
+    qr_copy_account: 'Copy',
+    qr_done_button: 'I Have Paid / Continue',
+    qr_close: 'Close',
+    qr_view_button: 'Scan QR Code Now',
 
     // Orders
     order_history: 'Order History',
@@ -208,6 +218,16 @@ export const translations = {
     payment_method: 'វិធីសាស្ត្រទូទាត់ប្រាក់',
     cash_on_delivery: 'ទូទាត់ពេលទទួលទំនិញ (COD)',
     bank_transfer: 'ផ្ទេរប្រាក់តាមធនាគារ (QR Code)',
+    qr_payment_title: 'ការទូទាត់តាមធនាគារ (KHQR Code)',
+    qr_scan_instruction: 'សូមបើកកម្មវិធីធនាគារចល័តរបស់អ្នក (ABA, Wing, ACLEDA, Bakong) រួចស្កេន QR Code ដើម្បីទូទាត់ប្រាក់។',
+    qr_merchant_name: 'ឈ្មោះអាជីវកម្ម',
+    qr_account_number: 'លេខគណនីធនាគារ',
+    qr_amount_due: 'ចំនួនទឹកប្រាក់ត្រូវបង់',
+    qr_copied: 'បានចម្លងរួចរាល់!',
+    qr_copy_account: 'ចម្លង',
+    qr_done_button: 'ខ្ញុំបានទូទាត់រួចរាល់ / បន្ត',
+    qr_close: 'បិទ',
+    qr_view_button: 'ស្កេន QR Code ឥឡូវនេះ',
 
     // Orders
     order_history: 'ប្រវត្តិការបញ្ជាទិញ',
