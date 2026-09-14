@@ -11,7 +11,7 @@ let poolConfig = {};
 if (connectionString) {
     const isRemote = connectionString.includes('sslmode=require') || 
                      connectionString.includes('neon.tech') || 
-                     connectionString.includes('supabase.co') ||
+                     connectionString.includes('supabase') ||
                      connectionString.includes('render.com');
 
     poolConfig = {
@@ -19,7 +19,7 @@ if (connectionString) {
         ssl: isRemote ? { rejectUnauthorized: false } : false
     };
 } else {
-    const isRemoteHost = (process.env.PGHOST || '').includes('supabase.co') ||
+    const isRemoteHost = (process.env.PGHOST || '').includes('supabase') ||
                          (process.env.PGHOST || '').includes('neon.tech') ||
                          (process.env.PGHOST || '').includes('render.com') ||
                          process.env.PGSSL === 'true';
