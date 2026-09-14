@@ -30,6 +30,8 @@ api.interceptors.response.use(
   }
 );
 
+import fallbackData from './fallbackData.json';
+
 // --- Auth Endpoints ---
 export const authApi = {
   login: (data) => api.post('/auth/login', data),
@@ -38,13 +40,67 @@ export const authApi = {
   updateProfile: (data) => api.put('/auth/profile', data),
 };
 
-// --- Products Endpoints ---
+// --- Products Endpoints (with automatic static fallback for GitHub Pages demo) ---
 export const productApi = {
-  getProducts: (params) => api.get('/products', { params }),
-  getProduct: (identifier) => api.get(`/products/${identifier}`),
-  compareProducts: (ids) => api.get('/products/compare', { params: { ids } }),
-  getBrands: () => api.get('/products/brands'),
-  getCategories: () => api.get('/products/categories'),
+  getProducts: async (params = {}) => {
+    try {
+      return await api.get('/products', { params });
+    } catch (err) {
+      console.warn('[API Fallback] Using offline catalog for demo:', err.message);
+      let list = [...(fallbackData.products || [])];
+      if (params.search) {
+        const q = params.search.toLowerCase();
+        list = list.filter(p => p.name.toLowerCase().includes(q) || (p.model && p.model.toLowerCase().includes(q)) || (p.brand_name && p.brand_name.toLowerCase().includes(q)));
+      }
+      if (params.brand) {
+        list = list.filter(p => p.brand_slug && p.brand_slug.toLowerCase() === params.brand.toLowerCase());
+      }
+      if (params.category) {
+        list = list.filter(p => p.category_slug && p.category_slug.toLowerCase() === params.category.toLowerCase());
+      }
+      if (params.is_featured === 'true') {
+        list = list.filter(p => p.is_featured);
+      }
+      if (params.limit) {
+        list = list.slice(0, parseInt(params.limit, 10));
+      }
+      return { success: true, count: list.length, total: list.length, data: list };
+    }
+  },
+  getProduct: async (identifier) => {
+    try {
+      return await api.get(`/products/${identifier}`);
+    } catch (err) {
+      console.warn('[API Fallback] Using offline product detail for:', identifier);
+      const product = (fallbackData.products || []).find(p => p.slug === identifier || p.id === identifier);
+      if (product) return { success: true, data: product };
+      throw err;
+    }
+  },
+  compareProducts: async (ids) => {
+    try {
+      return await api.get('/products/compare', { params: { ids } });
+    } catch (err) {
+      console.warn('[API Fallback] Comparing from offline catalog');
+      const idArr = Array.isArray(ids) ? ids : (ids ? ids.split(',') : []);
+      const matched = (fallbackData.products || []).filter(p => idArr.includes(p.id) || idArr.includes(p.slug));
+      return { success: true, data: matched };
+    }
+  },
+  getBrands: async () => {
+    try {
+      return await api.get('/products/brands');
+    } catch (err) {
+      return { success: true, data: fallbackData.brands || [] };
+    }
+  },
+  getCategories: async () => {
+    try {
+      return await api.get('/products/categories');
+    } catch (err) {
+      return { success: true, data: fallbackData.categories || [] };
+    }
+  },
 };
 
 // --- Cart Endpoints ---
@@ -66,7 +122,26 @@ export const wishlistApi = {
 
 // --- Orders Endpoints ---
 export const orderApi = {
-  checkout: (data) => api.post('/orders/checkout', data),
+  checkout: async (data) => {
+    try {
+      return await api.post('/orders/checkout', data);
+    } catch (err) {
+      console.warn('[API Fallback] Offline checkout simulation');
+      return {
+        success: true,
+        data: {
+          order: {
+            id: 'demo-' + Date.now(),
+            order_number: 'NEX-' + Math.floor(100000 + Math.random() * 900000),
+            total_amount: data.totalAmount || 1049.00,
+            payment_method: data.payment_method || 'Bank Transfer',
+            payment_status: 'pending',
+            created_at: new Date().toISOString()
+          }
+        }
+      };
+    }
+  },
   getUserOrders: () => api.get('/orders'),
   getOrderDetails: (identifier) => api.get(`/orders/${identifier}`),
 };
