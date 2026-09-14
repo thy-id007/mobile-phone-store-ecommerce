@@ -118,14 +118,14 @@ const ProductDetailPage = () => {
       </div>
 
       {/* Main Details Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '48px', alignItems: 'start', marginBottom: '70px' }}>
+      <div className="product-detail-layout">
         
         {/* Left: Gallery */}
         <div>
           <div
             style={{
               width: '100%',
-              height: '420px',
+              height: 'clamp(280px, 45vw, 440px)',
               borderRadius: 'var(--radius-lg)',
               overflow: 'hidden',
               background: '#090d16',
@@ -136,7 +136,7 @@ const ProductDetailPage = () => {
             <img
               src={activeImage || 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80'}
               alt={product.name}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80';
@@ -146,7 +146,7 @@ const ProductDetailPage = () => {
 
           {/* Thumbnails list */}
           {product.images && product.images.length > 1 && (
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '6px' }}>
               {product.images.map((img) => (
                 <button
                   key={img.id}
@@ -233,7 +233,7 @@ const ProductDetailPage = () => {
                 <span>{t('color', 'Color')}:</span>
                 <span style={{ color: '#fff', fontWeight: '700' }}>{selectedVariant?.color_name}</span>
               </label>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 {Array.from(new Set(product.variants.map((v) => v.color_name))).map((colorName) => {
                   const vMatch = product.variants.find((v) => v.color_name === colorName);
                   const isSelected = selectedVariant?.color_name === colorName;
@@ -283,7 +283,7 @@ const ProductDetailPage = () => {
                 <span>{t('storage', 'Storage')} & {t('ram', 'RAM')}:</span>
                 <span style={{ color: '#fff', fontWeight: '700' }}>{selectedVariant?.storage} ({selectedVariant?.ram} RAM)</span>
               </label>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 {Array.from(new Set(product.variants.map((v) => v.storage))).map((storageSize) => {
                   const vMatch = product.variants.find((v) => v.storage === storageSize && v.color_name === selectedVariant?.color_name) ||
                                  product.variants.find((v) => v.storage === storageSize);
@@ -314,7 +314,7 @@ const ProductDetailPage = () => {
           )}
 
           {/* Quantity & CTAs */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '28px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginBottom: '28px' }}>
             {/* Quantity */}
             <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-input)', border: '1px solid var(--border-card)', borderRadius: 'var(--radius-md)' }}>
               <button
@@ -336,7 +336,7 @@ const ProductDetailPage = () => {
             <button
               onClick={handleAddToCart}
               className="btn btn-primary btn-lg"
-              style={{ flex: 1, gap: '10px' }}
+              style={{ flex: 1, minWidth: '180px', gap: '10px' }}
               disabled={addingToCart}
             >
               <ShoppingCart size={20} />
@@ -355,7 +355,7 @@ const ProductDetailPage = () => {
           </div>
 
           {/* Key Specs Pills */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', padding: '16px', background: 'var(--bg-card)', borderRadius: 'var(--radius-md)' }}>
+          <div className="specs-pill-grid" style={{ padding: '16px', background: 'var(--bg-card)', borderRadius: 'var(--radius-md)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' }}>
               <Cpu size={16} color="var(--accent-cyan)" />
               <span>{product.processor_spec || 'Flagship Processor'}</span>
@@ -412,12 +412,9 @@ const ProductDetailPage = () => {
                   {specsList.map((s, idx) => (
                     <div
                       key={s.spec_name}
+                      className="spec-row"
                       style={{
-                        display: 'grid',
-                        gridTemplateColumns: '220px 1fr',
-                        padding: '14px 24px',
                         borderBottom: idx < specsList.length - 1 ? '1px solid var(--border-subtle)' : 'none',
-                        fontSize: '14px',
                       }}
                     >
                       <div style={{ color: 'var(--text-muted)', fontWeight: '600' }}>{s.spec_name}</div>

@@ -63,7 +63,7 @@ const AdminOrdersPage = () => {
   };
 
   return (
-    <div style={{ padding: '36px 40px' }}>
+    <div className="admin-content-padding">
       
       {/* Header & Status Filter */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
@@ -72,7 +72,7 @@ const AdminOrdersPage = () => {
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Review incoming orders, assign courier tracking, and update status</p>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
           {['', 'pending', 'processing', 'shipped', 'delivered'].map((st) => (
             <button
               key={st}

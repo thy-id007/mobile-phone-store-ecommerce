@@ -39,10 +39,10 @@ const AdminDashboardPage = () => {
   ];
 
   return (
-    <div style={{ padding: '36px 40px' }}>
+    <div className="admin-content-padding">
       
       {/* Page Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
           <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '6px' }}>Dashboard Overview</h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Real-time sales, order fulfillment, and inventory analytics</p>

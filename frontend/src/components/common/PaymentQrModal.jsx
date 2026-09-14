@@ -141,7 +141,7 @@ const PaymentQrModal = ({ isOpen, onClose, totalAmount = 0, orderNumber = '' }) 
               marginBottom: '18px',
             }}
           >
-            <div style={{ width: '220px', height: '220px', position: 'relative', margin: '0 auto' }}>
+            <div style={{ width: 'min(220px, 60vw)', height: 'min(220px, 60vw)', position: 'relative', margin: '0 auto' }}>
               <img
                 src={qrUrl}
                 alt="Bank Transfer QR Code"

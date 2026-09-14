@@ -51,12 +51,12 @@ const HomePage = () => {
       <section
         style={{
           position: 'relative',
-          padding: '80px 0 60px',
+          padding: 'clamp(40px, 6vw, 80px) 0 clamp(30px, 5vw, 60px)',
           overflow: 'hidden',
           background: 'radial-gradient(circle at 50% 10%, rgba(59, 130, 246, 0.15), transparent 60%)',
         }}
       >
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '50px', alignItems: 'center' }}>
+        <div className="container hero-grid">
           
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: 'var(--radius-full)', background: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)', marginBottom: '20px' }}>
@@ -66,13 +66,13 @@ const HomePage = () => {
               </span>
             </div>
 
-            <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: '900', letterSpacing: '-0.02em', lineHeight: '1.15', marginBottom: '20px' }}>
+            <h1 style={{ fontSize: 'clamp(28px, 5vw, 56px)', fontWeight: '900', letterSpacing: '-0.02em', lineHeight: '1.15', marginBottom: '20px' }}>
               <span style={{ background: 'var(--accent-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 {t('hero_title')}
               </span>
             </h1>
 
-            <p style={{ fontSize: '17px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '32px', maxWidth: '520px' }}>
+            <p style={{ fontSize: 'clamp(15px, 2vw, 17px)', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '32px', maxWidth: '520px' }}>
               {t('hero_subtitle')}
             </p>
 
@@ -88,17 +88,17 @@ const HomePage = () => {
             </div>
 
             {/* Quick Metrics */}
-            <div style={{ display: 'flex', gap: '30px', marginTop: '40px', borderTop: '1px solid var(--border-subtle)', paddingTop: '24px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px 30px', marginTop: '36px', borderTop: '1px solid var(--border-subtle)', paddingTop: '24px' }}>
               <div>
-                <div style={{ fontSize: '24px', fontWeight: '800', color: '#fff' }}>100%</div>
+                <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: '#fff' }}>100%</div>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{t('trust_genuine')}</div>
               </div>
               <div>
-                <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--accent-cyan)' }}>0%</div>
+                <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: 'var(--accent-cyan)' }}>0%</div>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Financing Available</div>
               </div>
               <div>
-                <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--success)' }}>1 Year</div>
+                <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: 'var(--success)' }}>1 Year</div>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{t('trust_warranty')}</div>
               </div>
             </div>
@@ -114,17 +114,17 @@ const HomePage = () => {
                 borderRadius: '24px',
                 background: 'linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8))',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                padding: '30px',
+                padding: 'clamp(18px, 4vw, 30px)',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.2)',
                 backdropFilter: 'blur(20px)',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '8px' }}>
                 <span className="badge badge-blue">FLAGSHIP HIGHLIGHT</span>
                 <span style={{ fontSize: '13px', color: 'var(--accent-cyan)', fontWeight: '700' }}>Apple A18 Pro · 3nm</span>
               </div>
 
-              <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '16px', background: '#070b14', marginBottom: '20px' }}>
+              <div style={{ height: 'clamp(200px, 35vw, 300px)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: '16px', background: '#070b14', marginBottom: '20px' }}>
                 <img
                   src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80"
                   alt="iPhone 16 Pro Max Showcase"
@@ -156,7 +156,7 @@ const HomePage = () => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Official distributor for world-renowned mobile manufacturers</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px' }}>
+        <div className="brand-grid">
           {brands.map((brand) => (
             <Link
               key={brand.id}
@@ -226,7 +226,7 @@ const HomePage = () => {
 
       {/* 4. TRUST & ASSURANCE BADGES */}
       <section className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' }}>
+        <div className="trust-grid">
           
           <div className="card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

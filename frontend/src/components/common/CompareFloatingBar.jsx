@@ -15,6 +15,7 @@ const CompareFloatingBar = () => {
 
   return (
     <div
+      className="compare-floating-bar"
       style={{
         position: 'fixed',
         bottom: '20px',
@@ -30,12 +31,11 @@ const CompareFloatingBar = () => {
         display: 'flex',
         alignItems: 'center',
         gap: '20px',
-        maxWidth: '90vw',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <SlidersHorizontal size={18} color="var(--accent-cyan)" />
-        <span style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>
+        <span className="compare-bar-label" style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>
           Compare ({selectedPhones.length}/4):
         </span>
       </div>
@@ -60,7 +60,7 @@ const CompareFloatingBar = () => {
               alt={phone.name}
               style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }}
             />
-            <span style={{ fontSize: '12px', fontWeight: '600', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span className="compare-bar-item-name" style={{ fontSize: '12px', fontWeight: '600', maxWidth: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {phone.model || phone.name}
             </span>
             <button

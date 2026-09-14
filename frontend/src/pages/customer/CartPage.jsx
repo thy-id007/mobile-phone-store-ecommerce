@@ -41,26 +41,19 @@ const CartPage = () => {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '36px', alignItems: 'start' }}>
+      <div className="cart-layout">
         
         {/* Cart Items Table/Cards */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {items.map((item) => (
             <div
               key={item.cart_item_id}
-              className="card"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '90px 1fr auto',
-                gap: '20px',
-                alignItems: 'center',
-                padding: '16px',
-              }}
+              className="card cart-item-card"
             >
               <img
                 src={item.variant_image || 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=300&auto=format&fit=crop&q=80'}
                 alt={item.product_name}
-                style={{ width: '90px', height: '90px', objectFit: 'cover', borderRadius: '10px', background: '#090d16' }}
+                style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '10px', background: '#090d16' }}
               />
 
               <div>
@@ -69,11 +62,11 @@ const CartPage = () => {
                     {item.product_name}
                   </h3>
                 </Link>
-                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '10px' }}>
                   {t('color', 'Color')}: {item.color_name} • {t('storage', 'Storage')}: {item.storage} • {t('ram', 'RAM')}: {item.ram}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', background: 'var(--bg-input)', border: '1px solid var(--border-card)', borderRadius: '6px' }}>
                     <button
                       onClick={() => updateQuantity(item.cart_item_id, Math.max(1, item.quantity - 1))}
@@ -97,7 +90,7 @@ const CartPage = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', height: '100%' }}>
+              <div className="cart-item-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', height: '100%' }}>
                 <button
                   onClick={() => removeItem(item.cart_item_id)}
                   style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '6px' }}

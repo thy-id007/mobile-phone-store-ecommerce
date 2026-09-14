@@ -101,15 +101,19 @@ const ComparePage = () => {
           Aligning hardware specification matrix...
         </div>
       ) : (
-        <div style={{ overflowX: 'auto', background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '700px' }}>
-            <tbody>
-              
-              {/* ROW 1: HEADER & REMOVE BUTTONS */}
-              <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                <th style={{ padding: '20px', width: '220px', background: 'rgba(255,255,255,0.02)', color: 'var(--text-muted)', fontSize: '13px' }}>
-                  Smartphones ({comparisonData.length}/4)
-                </th>
+        <div>
+          <div className="mobile-scroll-hint" style={{ display: 'none', textAlign: 'right', fontSize: '12px', color: 'var(--accent-cyan)', marginBottom: '8px' }}>
+            👈 Swipe horizontally to compare →
+          </div>
+          <div className="table-responsive" style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
+              <tbody>
+                
+                {/* ROW 1: HEADER & REMOVE BUTTONS */}
+                <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+                  <th style={{ padding: '16px 20px', width: '180px', background: 'rgba(255,255,255,0.02)', color: 'var(--text-muted)', fontSize: '13px' }}>
+                    Smartphones ({comparisonData.length}/4)
+                  </th>
                 {comparisonData.map((phone) => (
                   <td key={phone.id} style={{ padding: '20px', verticalAlign: 'top' }}>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
@@ -228,7 +232,8 @@ const ComparePage = () => {
             </tbody>
           </table>
         </div>
-      )}
+      </div>
+    )}
 
       {/* Quick Add Selector Bar */}
       {selectedPhones.length > 0 && selectedPhones.length < 4 && (

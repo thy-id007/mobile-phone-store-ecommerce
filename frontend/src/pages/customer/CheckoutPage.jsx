@@ -192,7 +192,7 @@ const CheckoutPage = () => {
         {t('checkout', 'Checkout & Shipping Confirmation')}
       </h1>
 
-      <form onSubmit={handlePlaceOrder} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px', alignItems: 'start' }}>
+      <form onSubmit={handlePlaceOrder} className="checkout-layout">
         
         {/* LEFT: Address & Payment Details */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -204,7 +204,7 @@ const CheckoutPage = () => {
               <span>1. {t('shipping_address', 'Delivery Address')}</span>
             </h2>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div className="form-grid-2">
               <div className="form-group">
                 <label className="form-label">Recipient Full Name *</label>
                 <input
@@ -242,7 +242,7 @@ const CheckoutPage = () => {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+            <div className="form-grid-3">
               <div className="form-group">
                 <label className="form-label">City / Province</label>
                 <input
@@ -405,7 +405,7 @@ const CheckoutPage = () => {
         </div>
 
         {/* RIGHT: Order Summary & Coupon */}
-        <div style={{ position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="checkout-summary-column">
           
           <div className="card">
             <h2 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px' }}>{t('total', 'Order Overview')}</h2>

@@ -24,7 +24,7 @@ const AdminCustomersPage = () => {
   }, []);
 
   return (
-    <div style={{ padding: '36px 40px' }}>
+    <div className="admin-content-padding">
       
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '6px' }}>Registered Customers</h1>

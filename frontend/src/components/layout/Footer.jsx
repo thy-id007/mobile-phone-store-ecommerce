@@ -8,7 +8,7 @@ const Footer = () => {
       
       {/* Service Highlights */}
       <div style={{ borderBottom: '1px solid var(--border-subtle)', padding: '36px 0' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
+        <div className="container footer-highlights-grid">
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ background: 'rgba(59, 130, 246, 0.12)', padding: '12px', borderRadius: '12px', color: 'var(--accent-blue)' }}>
@@ -54,7 +54,7 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Links */}
-      <div className="container" style={{ padding: '60px 20px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
+      <div className="container footer-main-grid" style={{ padding: '60px 20px 40px' }}>
         
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>

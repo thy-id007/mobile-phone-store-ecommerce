@@ -39,17 +39,17 @@ const Header = () => {
     <header className="glass-header">
       {/* Phnom Penh Local Shop Announcement Top Bar */}
       <div style={{ background: 'linear-gradient(90deg, rgba(37,99,235,0.18) 0%, rgba(6,182,212,0.18) 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '5px 0', fontSize: '11.5px', color: 'var(--text-secondary)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span>🇰🇭</span>
-            <span style={{ color: '#fff', fontWeight: '600' }}>Phnom Penh Local Flagship Store</span>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-            <span>Preah Monivong & Toul Kork Branches</span>
+            <span style={{ color: '#fff', fontWeight: '600' }}>Phnom Penh Store</span>
+            <span className="header-topbar-details" style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
+            <span className="header-topbar-details">Preah Monivong & Toul Kork</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="header-topbar-details">
             <span>⚡ 1-2H Fast Delivery</span>
             <span>•</span>
-            <span>🛡️ Official Cambodia Warranty</span>
+            <span>🛡️ Official Warranty</span>
             <span>•</span>
             <span style={{ color: 'var(--accent-cyan)', fontWeight: '600' }}>KHQR Instant Pay</span>
           </div>
@@ -83,7 +83,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav style={{ display: 'none', gap: '24px', alignItems: 'center' }} className="desktop-nav">
+        <nav style={{ gap: '24px', alignItems: 'center' }} className="desktop-nav">
           <Link to="/" style={{ fontWeight: '500', color: 'var(--text-secondary)' }} onMouseEnter={(e) => e.target.style.color = '#fff'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>
             {t('home')}
           </Link>
@@ -224,7 +224,8 @@ const Header = () => {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="btn btn-outline mobile-toggle"
-            style={{ padding: '8px', display: 'none' }}
+            style={{ padding: '8px' }}
+            aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

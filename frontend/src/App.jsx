@@ -1,5 +1,6 @@
-import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import React, { useState } from 'react';
+import { HashRouter as Router, Routes, Route, Navigate, Outlet, Link } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
@@ -50,6 +51,7 @@ const CustomerLayout = () => {
 // Admin Layout Wrapper with Role Guard
 const AdminLayout = () => {
   const { user, loading, isAdmin } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (loading) {
     return <div style={{ padding: '60px', textAlign: 'center', color: 'var(--text-muted)' }}>Checking authorization...</div>;
@@ -60,9 +62,56 @@ const AdminLayout = () => {
   }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
-      <AdminSidebar />
-      <div style={{ flex: 1, overflowY: 'auto', background: 'var(--bg-primary)' }}>
+    <div className="admin-layout-container">
+      {/* Mobile Topbar */}
+      <div className="admin-mobile-header">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: '8px',
+            color: '#fff',
+            padding: '8px 12px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            fontSize: '13px',
+            fontWeight: '600',
+          }}
+        >
+          <Menu size={18} />
+          <span>Menu</span>
+        </button>
+
+        <div style={{ fontWeight: '800', fontSize: '14px', color: '#fff' }}>
+          ADMIN PORTAL
+        </div>
+
+        <Link
+          to="/"
+          style={{
+            fontSize: '12px',
+            color: 'var(--accent-blue)',
+            textDecoration: 'none',
+            fontWeight: '600',
+          }}
+        >
+          Storefront →
+        </Link>
+      </div>
+
+      {sidebarOpen && (
+        <div
+          className="admin-sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      <div className="admin-main-viewport">
         <Outlet />
       </div>
     </div>
