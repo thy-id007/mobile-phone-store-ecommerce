@@ -137,6 +137,10 @@ const ProductDetailPage = () => {
               src={activeImage || 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80'}
               alt={product.name}
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80';
+              }}
             />
           </div>
 
@@ -158,7 +162,15 @@ const ProductDetailPage = () => {
                     padding: 0,
                   }}
                 >
-                  <img src={img.image_url} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img
+                    src={img.image_url}
+                    alt="thumbnail"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80';
+                    }}
+                  />
                 </button>
               ))}
             </div>

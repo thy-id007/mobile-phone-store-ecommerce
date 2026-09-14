@@ -75,6 +75,10 @@ const ProductCard = ({ product }) => {
             objectFit: 'contain',
             transition: 'transform 0.4s ease',
           }}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=600&auto=format&fit=crop&q=80';
+          }}
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1.0)')}
         />
