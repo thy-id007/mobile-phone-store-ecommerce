@@ -10,7 +10,8 @@
     "test:api": "node backend/test/api_test.js",
     "db:init": "npm --prefix backend run db:init",
     "dev:frontend": "npm --prefix frontend run dev",
-    "build:frontend": "npm --prefix frontend run build"
+    "build:frontend": "npm --prefix frontend run build",
+    "deploy": "npm --prefix frontend run build && powershell -Command \"Push-Location frontend/dist; Copy-Item index.html 404.html -Force; New-Item -ItemType File -Path .nojekyll -Force; git init; git config user.name 'Student Developer'; git config user.email 'student@university.edu'; git checkout -b gh-pages; git add -A; git commit -m 'Deploy to GitHub Pages'; git remote add origin https://github.com/thy-id007/mobile-phone-store-ecommerce.git; git push origin gh-pages --force; Remove-Item -Recurse -Force .git; Pop-Location\""
   },
   "keywords": [
     "ecommerce",
