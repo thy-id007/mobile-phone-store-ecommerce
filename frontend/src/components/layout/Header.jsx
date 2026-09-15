@@ -196,7 +196,7 @@ const Header = () => {
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {isAdmin && (
-                <Link to="/admin/dashboard" className="btn btn-secondary btn-sm" title={t('admin_panel')}>
+                <Link to="/admin/dashboard" className="btn btn-secondary btn-sm desktop-auth" title={t('admin_panel')}>
                   <LayoutDashboard size={16} />
                   <span className="desktop-text">Admin</span>
                 </Link>
@@ -205,12 +205,12 @@ const Header = () => {
                 <User size={16} />
                 <span className="desktop-text">{user.full_name?.split(' ')[0]}</span>
               </Link>
-              <button onClick={logout} className="btn btn-outline btn-sm" title={t('logout')} style={{ padding: '8px' }}>
+              <button onClick={logout} className="btn btn-outline btn-sm desktop-auth" title={t('logout')} style={{ padding: '8px' }}>
                 <LogOut size={16} />
               </button>
             </div>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div className="desktop-auth" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Link to="/login" className="btn btn-outline btn-sm">
                 {t('login')}
               </Link>
@@ -253,17 +253,51 @@ const Header = () => {
             <Globe size={16} />
             <span>{language === 'en' ? '🇰🇭 ភាសាខ្មែរ (Khmer)' : '🇬🇧 English'}</span>
           </button>
-          {user && (
-            <>
-              <Link to="/orders" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_orders')}</Link>
-              <Link to="/profile" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_profile')}</Link>
-              {isAdmin && (
-                <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600', color: 'var(--accent-cyan)' }}>
-                  {t('admin_panel')}
+
+          {/* Auth options in mobile drawer */}
+          <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '12px', marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {user ? (
+              <>
+                <Link to="/orders" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_orders')}</Link>
+                <Link to="/profile" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600' }}>{t('my_profile')} ({user.full_name})</Link>
+                {isAdmin && (
+                  <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} style={{ padding: '8px 0', fontWeight: '600', color: 'var(--accent-cyan)' }}>
+                    {t('admin_panel')}
+                  </Link>
+                )}
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="btn btn-outline btn-sm"
+                  style={{ color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.3)', justifyContent: 'center', marginTop: '6px' }}
+                >
+                  <LogOut size={16} />
+                  <span>{t('logout')}</span>
+                </button>
+              </>
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '6px' }}>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn btn-outline btn-sm"
+                  style={{ justifyContent: 'center' }}
+                >
+                  {t('login')}
                 </Link>
-              )}
-            </>
-          )}
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn btn-primary btn-sm"
+                  style={{ justifyContent: 'center' }}
+                >
+                  {t('register')}
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </header>

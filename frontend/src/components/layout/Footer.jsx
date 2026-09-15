@@ -25,8 +25,8 @@ const Footer = () => {
               <ShieldCheck size={24} />
             </div>
             <div>
-              <div style={{ fontWeight: '700', fontSize: '15px' }}>2-Year Official Warranty</div>
-              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>100% Genuine manufacturer stock</div>
+              <div style={{ fontWeight: '700', fontSize: '15px' }}>1-Year Official Warranty</div>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>100% Genuine Cambodia local stock</div>
             </div>
           </div>
 

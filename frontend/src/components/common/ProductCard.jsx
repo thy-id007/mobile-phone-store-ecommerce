@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Cpu, Eye, SlidersHorizontal, Check, Star } from 'lucide-react';
+import { Cpu, Eye, SlidersHorizontal, Check, Star, ShoppingCart } from 'lucide-react';
 import { useCompare } from '../../context/CompareContext';
+import { useCart } from '../../context/CartContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 const ProductCard = ({ product }) => {
   const { isComparing, toggleCompare } = useCompare();
+  const { addToCart } = useCart();
   const { t } = useLanguage();
+  const [addedAnim, setAddedAnim] = useState(false);
   const comparing = isComparing(product.id);
 
   const discount = parseFloat(product.discount_percentage || 0);
@@ -14,6 +17,27 @@ const ProductCard = ({ product }) => {
   const discountedPrice = discount > 0 ? (basePrice * (1 - discount / 100)).toFixed(2) : basePrice.toFixed(2);
 
   const defaultImage = product.primary_image || 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=600&auto=format&fit=crop&q=80';
+
+  const handleQuickAdd = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const defaultVariant = product.variants?.[0] || { id: product.id, color_name: 'Standard', storage: '256GB', ram: '8GB' };
+      await addToCart(defaultVariant.id, 1, {
+        product_name: product.name,
+        product_slug: product.slug,
+        variant_image: defaultImage,
+        color_name: defaultVariant.color_name || 'Standard',
+        storage: defaultVariant.storage || '256GB',
+        ram: defaultVariant.ram || '8GB',
+        effective_price: discountedPrice,
+      });
+      setAddedAnim(true);
+      setTimeout(() => setAddedAnim(false), 2000);
+    } catch (err) {
+      console.error('Quick add failed:', err);
+    }
+  };
 
   return (
     <div
@@ -134,7 +158,7 @@ const ProductCard = ({ product }) => {
 
       {/* Pricing & CTA Controls */}
       <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px', marginTop: 'auto' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '20px', fontWeight: '800', color: '#fff' }}>
             ${discountedPrice}
           </span>
@@ -143,12 +167,24 @@ const ProductCard = ({ product }) => {
               ${basePrice.toFixed(2)}
             </span>
           )}
-          <span style={{ fontSize: '11px', color: 'var(--accent-cyan)', fontWeight: '600', marginLeft: 'auto' }}>
-            ≈ ៛{(Math.round(parseFloat(discountedPrice) * 4100 / 1000) * 1000).toLocaleString()}
+          <span
+            style={{
+              fontSize: '11px',
+              color: 'var(--accent-cyan)',
+              fontWeight: '700',
+              marginLeft: 'auto',
+              background: 'rgba(6, 182, 212, 0.1)',
+              padding: '2px 8px',
+              borderRadius: 'var(--radius-full)',
+              border: '1px solid rgba(6, 182, 212, 0.25)',
+              letterSpacing: '0.2px',
+            }}
+          >
+            ≈ ៛{(Math.round(parseFloat(discountedPrice) * 4100 / 1000) * 1000).toLocaleString()} KHR
           </span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '8px' }}>
           {/* Compare Toggle Button */}
           <button
             onClick={() => toggleCompare(product)}
@@ -164,6 +200,21 @@ const ProductCard = ({ product }) => {
             <Eye size={15} />
             <span>{t('view_details')}</span>
           </Link>
+
+          {/* Quick Add to Cart Button */}
+          <button
+            onClick={handleQuickAdd}
+            className={`btn ${addedAnim ? 'btn-primary' : 'btn-primary'} btn-sm`}
+            style={{
+              padding: '8px 10px',
+              background: addedAnim ? 'var(--success)' : 'var(--accent-gradient)',
+              borderColor: addedAnim ? 'var(--success)' : 'transparent',
+              transition: 'all 0.2s ease',
+            }}
+            title={t('add_to_cart')}
+          >
+            {addedAnim ? <Check size={16} /> : <ShoppingCart size={16} />}
+          </button>
         </div>
       </div>
     </div>

@@ -94,8 +94,8 @@ const HomePage = () => {
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{t('trust_genuine')}</div>
               </div>
               <div>
-                <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: 'var(--accent-cyan)' }}>0%</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Financing Available</div>
+                <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: 'var(--accent-cyan)' }}>0% APR</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Flexible Financing</div>
               </div>
               <div>
                 <div style={{ fontSize: 'clamp(20px, 3vw, 24px)', fontWeight: '800', color: 'var(--success)' }}>1 Year</div>
@@ -224,50 +224,74 @@ const HomePage = () => {
         )}
       </section>
 
-      {/* 4. TRUST & ASSURANCE BADGES */}
+      {/* 4. PHNOM PENH STORE ADVANTAGE */}
       <section className="container">
-        <div className="trust-grid">
-          
-          <div className="card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Award size={24} color="var(--accent-cyan)" />
+        <div
+          style={{
+            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9))',
+            border: '1px solid rgba(59, 130, 246, 0.3)',
+            borderRadius: '24px',
+            padding: 'clamp(28px, 5vw, 48px)',
+            boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.15)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: '40px',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: 'var(--radius-full)', background: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)', marginBottom: '16px' }}>
+              <span>🇰🇭</span>
+              <span style={{ fontSize: '12px', fontWeight: '800', color: 'var(--accent-cyan)', letterSpacing: '0.5px' }}>
+                PHNOM PENH AUTHORIZED STORE
+              </span>
             </div>
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#fff', marginBottom: '4px' }}>{t('trust_genuine')}</h4>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{t('trust_genuine_desc')}</p>
+
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: '900', lineHeight: '1.25', marginBottom: '16px' }}>
+              Shop Flagship Smartphones with <span style={{ background: 'var(--accent-gradient)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Local Peace of Mind</span>
+            </h2>
+
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '28px' }}>
+              Visit our flagship concept stores at <strong>Preah Monivong Blvd (BKK1)</strong> and <strong>St 271 (Toul Kork)</strong>. Experience live demo units, instant trade-ins, and 1-2 hour express courier delivery across all 14 Phnom Penh Khans.
+            </p>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
+              <Link to="/catalog" className="btn btn-primary">
+                <span>Browse 70+ Models</span>
+                <ArrowRight size={16} />
+              </Link>
+              <Link to="/compare" className="btn btn-secondary">
+                <SlidersHorizontal size={16} />
+                <span>Hardware Matrix</span>
+              </Link>
             </div>
           </div>
 
-          <div className="card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <ShieldCheck size={24} color="var(--success)" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
+            <div className="card" style={{ padding: '20px', background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div style={{ fontSize: '26px', marginBottom: '8px' }}>🛵</div>
+              <div style={{ fontWeight: '700', fontSize: '15px', color: '#fff', marginBottom: '4px' }}>1-2H Express</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.5' }}>Grab & Nham24 fast delivery in Phnom Penh.</div>
             </div>
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#fff', marginBottom: '4px' }}>{t('trust_warranty')}</h4>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{t('trust_warranty_desc')}</p>
+
+            <div className="card" style={{ padding: '20px', background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div style={{ fontSize: '26px', marginBottom: '8px' }}>🛡️</div>
+              <div style={{ fontWeight: '700', fontSize: '15px', color: '#fff', marginBottom: '4px' }}>Official Warranty</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.5' }}>1-Year local service center coverage.</div>
+            </div>
+
+            <div className="card" style={{ padding: '20px', background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div style={{ fontSize: '26px', marginBottom: '8px' }}>💳</div>
+              <div style={{ fontWeight: '700', fontSize: '15px', color: '#fff', marginBottom: '4px' }}>KHQR Instant Pay</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.5' }}>Zero fees with ABA, Wing, & ACLEDA.</div>
+            </div>
+
+            <div className="card" style={{ padding: '20px', background: 'rgba(15, 23, 42, 0.6)' }}>
+              <div style={{ fontSize: '26px', marginBottom: '8px' }}>🔄</div>
+              <div style={{ fontWeight: '700', fontSize: '15px', color: '#fff', marginBottom: '4px' }}>Trade-In Desk</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.5' }}>Instant credit toward any new flagship.</div>
             </div>
           </div>
-
-          <div className="card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Truck size={24} color="var(--warning)" />
-            </div>
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#fff', marginBottom: '4px' }}>{t('trust_delivery')}</h4>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{t('trust_delivery_desc')}</p>
-            </div>
-          </div>
-
-          <div className="card" style={{ padding: '24px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(168, 85, 247, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <Headphones size={24} color="#a855f7" />
-            </div>
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#fff', marginBottom: '4px' }}>{t('trust_support')}</h4>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>{t('trust_support_desc')}</p>
-            </div>
-          </div>
-
         </div>
       </section>
 

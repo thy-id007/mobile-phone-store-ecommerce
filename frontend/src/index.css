@@ -119,6 +119,9 @@ button, input, select, textarea {
   .header-topbar-details {
     display: none !important;
   }
+  .desktop-auth {
+    display: none !important;
+  }
 }
 
 @media (max-width: 767px) {
