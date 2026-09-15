@@ -34,36 +34,36 @@ const RegisterPage = () => {
   return (
     <div className="container" style={{ padding: '60px 20px', maxWidth: '440px' }}>
       
-      <div className="card" style={{ padding: '36px 30px' }}>
+      <div className="card card-auth" style={{ padding: '38px 32px' }}>
         
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 20px var(--accent-glow)' }}>
-            <Smartphone size={24} color="#fff" />
+          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 24px var(--accent-glow)' }}>
+            <Smartphone size={26} color="#fff" />
           </div>
-          <h1 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '6px' }}>Create Account</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Join NEXUS Mobile Store to order and track devices</p>
+          <h1 style={{ fontSize: '26px', fontWeight: '800', marginBottom: '8px', letterSpacing: '-0.02em' }}>Create Account</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Join NEXUS Mobile Store to order and track devices</p>
         </div>
 
         {error && (
-          <div style={{ padding: '12px', background: 'var(--danger-bg)', border: '1px solid var(--danger)', borderRadius: 'var(--radius-md)', color: '#fca5a5', fontSize: '13px', marginBottom: '20px' }}>
+          <div style={{ padding: '12px 16px', background: 'var(--danger-bg)', border: '1px solid var(--danger)', borderRadius: 'var(--radius-md)', color: '#fca5a5', fontSize: '13px', marginBottom: '20px' }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
           <div className="form-group">
             <label className="form-label">Full Name *</label>
             <div style={{ position: 'relative' }}>
-              <User size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <User size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="text"
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '42px' }}
                 placeholder="Alex Johnson"
               />
             </div>
@@ -72,14 +72,14 @@ const RegisterPage = () => {
           <div className="form-group">
             <label className="form-label">Email Address *</label>
             <div style={{ position: 'relative' }}>
-              <Mail size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Mail size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '42px' }}
                 placeholder="alex@example.com"
               />
             </div>
@@ -88,14 +88,14 @@ const RegisterPage = () => {
           <div className="form-group">
             <label className="form-label">Phone Number (Optional)</label>
             <div style={{ position: 'relative' }}>
-              <Phone size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Phone size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
-                placeholder="+1 (555) 234-5678"
+                style={{ paddingLeft: '42px' }}
+                placeholder="+855 12 345 678"
               />
             </div>
           </div>
@@ -103,20 +103,31 @@ const RegisterPage = () => {
           <div className="form-group">
             <label className="form-label">Password *</label>
             <div style={{ position: 'relative' }}>
-              <Lock size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Lock size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '42px' }}
                 placeholder="At least 6 characters"
               />
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '8px', gap: '8px' }}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary btn-lg"
+            style={{
+              width: '100%',
+              marginTop: '10px',
+              gap: '8px',
+              fontWeight: '700',
+              letterSpacing: '0.02em',
+            }}
+          >
             <span>{loading ? 'Creating Account...' : 'Register'}</span>
             <ArrowRight size={18} />
           </button>
@@ -124,7 +135,7 @@ const RegisterPage = () => {
 
         <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '13px', color: 'var(--text-secondary)' }}>
           Already have an account?{' '}
-          <Link to="/login" style={{ color: 'var(--accent-blue)', fontWeight: '700' }}>
+          <Link to="/login" style={{ color: 'var(--accent-cyan)', fontWeight: '700' }}>
             Sign In
           </Link>
         </div>

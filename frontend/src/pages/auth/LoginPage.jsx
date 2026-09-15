@@ -42,35 +42,35 @@ const LoginPage = () => {
   return (
     <div className="container" style={{ padding: '60px 20px', maxWidth: '440px' }}>
       
-      <div className="card" style={{ padding: '36px 30px' }}>
+      <div className="card card-auth" style={{ padding: '38px 32px' }}>
         
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 20px var(--accent-glow)' }}>
-            <Smartphone size={24} color="#fff" />
+          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', boxShadow: '0 0 24px var(--accent-glow)' }}>
+            <Smartphone size={26} color="#fff" />
           </div>
-          <h1 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '6px' }}>Welcome Back</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Sign in to manage your orders, wishlist, and profile</p>
+          <h1 style={{ fontSize: '26px', fontWeight: '800', marginBottom: '8px', letterSpacing: '-0.02em' }}>Welcome Back</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Sign in to manage your orders, wishlist, and profile</p>
         </div>
 
         {error && (
-          <div style={{ padding: '12px', background: 'var(--danger-bg)', border: '1px solid var(--danger)', borderRadius: 'var(--radius-md)', color: '#fca5a5', fontSize: '13px', marginBottom: '20px' }}>
+          <div style={{ padding: '12px 16px', background: 'var(--danger-bg)', border: '1px solid var(--danger)', borderRadius: 'var(--radius-md)', color: '#fca5a5', fontSize: '13px', marginBottom: '20px' }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <div className="form-group">
             <label className="form-label">Email Address</label>
             <div style={{ position: 'relative' }}>
-              <Mail size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Mail size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '42px' }}
                 placeholder="name@example.com"
               />
             </div>
@@ -79,44 +79,71 @@ const LoginPage = () => {
           <div className="form-group">
             <label className="form-label">Password</label>
             <div style={{ position: 'relative' }}>
-              <Lock size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+              <Lock size={18} color="var(--accent-cyan)" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-field"
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '42px' }}
                 placeholder="••••••••"
               />
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: '8px', gap: '8px' }}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary btn-lg"
+            style={{
+              width: '100%',
+              marginTop: '10px',
+              gap: '8px',
+              fontWeight: '700',
+              letterSpacing: '0.02em',
+            }}
+          >
             <span>{loading ? 'Authenticating...' : 'Sign In'}</span>
             <ArrowRight size={18} />
           </button>
         </form>
 
         {/* Academic Demo Credentials Shortcuts */}
-        <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '28px', paddingTop: '20px' }}>
-          <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '10px', textAlign: 'center', letterSpacing: '0.5px' }}>
-            DEMO PRESET ACCOUNTS (UNIVERSITY EVALUATION)
+        <div style={{ borderTop: '1px solid var(--border-subtle)', marginTop: '28px', paddingTop: '22px' }}>
+          <div style={{ fontSize: '11px', fontWeight: '800', color: 'var(--text-muted)', marginBottom: '12px', textAlign: 'center', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Demo Preset Accounts (University Evaluation)
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
               type="button"
               onClick={fillCustomerCredentials}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '12px' }}
+              className="btn btn-sm"
+              style={{
+                flex: 1,
+                fontSize: '12px',
+                background: 'rgba(59, 130, 246, 0.12)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: '#93c5fd',
+                padding: '10px 12px',
+                fontWeight: '600',
+              }}
             >
               👤 Customer Account
             </button>
             <button
               type="button"
               onClick={fillAdminCredentials}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '12px', color: 'var(--accent-cyan)' }}
+              className="btn btn-sm"
+              style={{
+                flex: 1,
+                fontSize: '12px',
+                background: 'rgba(6, 182, 212, 0.12)',
+                border: '1px solid rgba(6, 182, 212, 0.3)',
+                color: '#67e8f9',
+                padding: '10px 12px',
+                fontWeight: '600',
+              }}
             >
               ⚡ Admin Portal
             </button>
@@ -125,7 +152,7 @@ const LoginPage = () => {
 
         <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '13px', color: 'var(--text-secondary)' }}>
           Don't have an account yet?{' '}
-          <Link to="/register" style={{ color: 'var(--accent-blue)', fontWeight: '700' }}>
+          <Link to="/register" style={{ color: 'var(--accent-cyan)', fontWeight: '700' }}>
             Create Account
           </Link>
         </div>
